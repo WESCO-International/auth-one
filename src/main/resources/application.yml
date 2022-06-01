@@ -1,0 +1,36 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://demo-env-postgress.postgres.database.azure.com:5432/auth-service
+    username: demoadmin
+    password: Wesco@124
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+iam :
+  provider :
+    url : https://common-iam-service.galuctussandbox.app
+    realm : iam-dev
+    resource: wdp-clients
+    public-client: true
+    bearer-only: true
+keycloak:
+  realm: iam-dev
+  resource: wdp-clients
+  auth-server-url: https://common-iam-service.galuctussandbox.app
+  ssl-required: none
+  use-resource-role-mappings: true
+  credentials:
+    secret : o5EZxLCe7aOcLvQ7r1VDj3ySh1J7Mdbj
+  security-constraints[0].authRoles[0] : user
+  cors: true
+  bearer-only: true
+  #security-constraints[0].securityCollections[0].patterns[0]: /**
+
+
