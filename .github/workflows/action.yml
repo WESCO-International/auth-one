@@ -1,0 +1,35 @@
+# Docker build and deploy image into docker hub
+
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop, feature/** ]
+jobs:
+  build:
+    uses: WESCO-International/workflow-templates/.github/workflows/java-build.yml@main
+
+  docker:
+    uses: WESCO-International/workflow-templates/.github/workflows/docker-build.yml@main
+    needs: build
+    with: 
+      release_name: ${{ github.event.repository.name }}
+      image_tag: ${{ github.sha }}
+    secrets:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  deploy-to-k8:
+    uses: WESCO-International/workflow-templates/.github/workflows/deployment.yml@main
+    needs: docker
+    with: 
+      release_name: ${{ github.event.repository.name }}
+      image_tag: ${{ github.sha }}
+    secrets:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
