@@ -32,9 +32,4 @@ public class AuthController extends BaseController {
                 this.getKeycloakContext(Constants.USER, realm));
         return accessTokenResponse;
     }
-    @GetMapping(path = "control")
-    public AccessTokenResponse getControl() {
-        log.info("Generating access token for clientID {}");
-      return null;
-    }
 }

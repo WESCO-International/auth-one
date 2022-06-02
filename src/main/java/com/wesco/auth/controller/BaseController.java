@@ -8,8 +8,6 @@ public abstract class BaseController {
     @Value("${iam.provider.url}")
     private String keycloak_url;
 
-
-
     public String getKeycloakContext(String roleType, String realm) {
         String url = "";
         if (Constants.ADMIN.equalsIgnoreCase(roleType)) {

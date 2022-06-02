@@ -1,6 +1,10 @@
 server:
-  port: 8081
+  port: 8082
 
+jwt:
+  secret: "https://common-iam-service.galuctussandbox.app/realms/iam-dev"
+  expirationDateInMs: 300
+  refreshExpirationDateInMs: 9000000
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -12,6 +16,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+
+  main:
+    allow-bean-definition-overriding: true
 
 iam :
   provider :

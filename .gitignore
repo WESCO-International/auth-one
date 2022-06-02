@@ -19,6 +19,9 @@
 *.tar.gz
 *.rar
 
+# iml file ignore
+*.iml
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -28,3 +31,8 @@ target/surefire-reports/TEST-SampleTest.xml
 target/surefire-reports/SampleTest.txt
 target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
 target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+.idea/
+*.iml
+.idea
+src/test/java/WdpApplicationTests.java
+/target/
