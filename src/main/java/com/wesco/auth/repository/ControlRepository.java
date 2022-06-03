@@ -1,5 +1,6 @@
 package com.wesco.auth.repository;
 
+import com.wesco.auth.mapper.CapabilitiesMapper;
 import com.wesco.auth.mapper.ControlMapper;
 import com.wesco.auth.mapper.UserMapper;
 import com.wesco.auth.model.Control;
@@ -19,6 +20,14 @@ public interface ControlRepository extends JpaRepository<Control, UUID> {
             "INNER JOIN RoleCapability rc ON rc.roleId = ur.roleId " +
             "INNER JOIN CapabilityControl cc ON cc.capabilityId = rc.capabilityId " +
             "INNER JOIN Control cntrl ON cntrl.controlId = cc.controlId WHERE user.email = :emailId")
-    List<ControlMapper> findControlsByEmail(@Param("emailId") String emailId);
+    List<ControlMapper> findUserControls(@Param("emailId") String emailId);
+
+    @Query("Select new com.wesco.auth.mapper.CapabilitiesMapper(cap.capabilityId, cap.name, cap.capabilityGroup.name, cap.application.name) FROM User user " +
+            "INNER JOIN UserRole ur ON user.userId = ur.userId " +
+            "INNER JOIN RoleCapability rc ON rc.roleId = ur.roleId " +
+            "INNER JOIN Capability cap ON rc.capabilityId = cap.capabilityId " +
+            "WHERE user.email = :emailId")
+    List<CapabilitiesMapper> findUserCapabilities(@Param("emailId") String emailId);
+
 
 }
