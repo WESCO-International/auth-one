@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,9 +24,19 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Import(KeycloakSpringBootConfigResolver.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     private static String AUTH_LOGIN = "/auth/token";
+    private static  String[] SWAGGER_RESOURCES = {"/v2/api-docs/**", "/v3/api-docs/**",
+            "/swagger-ui/**","/actuator/**"};
+    private static String[] SECURITY_IGNORE_RESOURCE = {"/*.js", "/*.css", "/*.ico",
+            "/assets/**", "/static/**", "/swagger-ui/**",
+            "/v2/api-docs/**", "/configuration/ui",
+            "/swagger-resources/**", "/configuration/**",
+            "/swagger-ui.html", "/webjars/**", "/swagger-ui/index.html",
+            "/swagger.json", "/configuration/ui",
+            "/v3/api-docs/**", "/v1/users/register",
+            "/v1/users/**/validate/**"};
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) {
@@ -61,6 +70,16 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter impleme
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.csrf().disable().authorizeRequests()
-                .antMatchers(AUTH_LOGIN).permitAll().anyRequest().authenticated();
+                .antMatchers(AUTH_LOGIN).permitAll()
+                .antMatchers(SWAGGER_RESOURCES).permitAll()
+                .anyRequest().authenticated();
+       // http.addFilterBefore(authFilter, BasicAuthenticationFilter.class);
     }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(SECURITY_IGNORE_RESOURCE);
+    }
+
 }

@@ -127,22 +127,6 @@ public class AuthOneErrorResponseHandler extends ResponseEntityExceptionHandler 
         }
     }
 
-/*
-    @ExceptionHandler(JwtExpiredTokenException.class)
-    public void handleJwtExpiredTokenException(HttpServletRequest request, HttpServletResponse response,
-                                          JwtExpiredTokenException exception) throws IOException,
-            ServletException {
-        log.error("Generic exception [{}]", exception.getMessage());
-        if (!response.isCommitted()) {
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            mapper.writeValue(response.getWriter(),
-                    WdpErrorResponse.of(exception.getMessage(),
-                            WdpErrorCode.BAD_REQUEST_PARAMS, HttpStatus.UNAUTHORIZED));
-        }
-    }
-
-*/
     @ExceptionHandler(NumberFormatException.class)
     public void handleNumberFormatException(HttpServletRequest request, HttpServletResponse response,
                                             NumberFormatException exception) throws IOException,
