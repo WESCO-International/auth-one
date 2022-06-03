@@ -19,9 +19,6 @@ public class ControlServiceImpl implements ControlService {
 
     @Override
     public List<ControlMapper> getMenu() {
-        Optional<UserDetail> userDetail = UserUtil.getCurrentUserInfo();
-        if(userDetail.isEmpty())
-            return new ArrayList<>();
-        return controlRepository.findControlsByEmail(userDetail.get().getEmail());
+        return controlRepository.findControlsByEmail(UserUtil.getCurrentUserInfo().get("email"));
     }
 }

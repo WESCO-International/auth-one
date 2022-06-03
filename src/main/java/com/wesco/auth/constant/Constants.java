@@ -9,5 +9,6 @@ public interface Constants {
      String ADMIN_REALMS_URL = "/admin/realms/";
 
      String ACCESS_TOKEN = "/protocol/openid-connect/token";
+     String USERS = "/users";
 
 }
