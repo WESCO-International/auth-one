@@ -19,5 +19,14 @@ public abstract class BaseController {
         }
         return url;
     }
+    public String getKeycloakCreateUserContext(String roleType, String realm) {
+        String url = "";
+        if (Constants.ADMIN.equalsIgnoreCase(roleType)) {
+            url = keycloak_url + Constants.ADMIN_REALMS_URL + realm + Constants.ACCESS_TOKEN;
+        } else if (Constants.USER.equalsIgnoreCase(roleType)) {
+            url = keycloak_url + Constants.ADMIN_REALMS_URL + realm + Constants.USERS;
+        }
+        return url;
+    }
 
 }
