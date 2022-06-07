@@ -1,10 +1,6 @@
 server:
   port: 8081
 
-jwt:
-  secret: "https://common-iam-service.galuctussandbox.app/realms/iam-dev"
-  expirationDateInMs: 300
-  refreshExpirationDateInMs: 9000000
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver

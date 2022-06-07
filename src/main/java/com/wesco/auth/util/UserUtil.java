@@ -14,10 +14,10 @@ public class UserUtil {
 
     public static UserDetail getCurrentUserInfo() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        KeycloakPrincipal principal = (KeycloakPrincipal)auth.getPrincipal();
+        KeycloakPrincipal principal = (KeycloakPrincipal) auth.getPrincipal();
         KeycloakSecurityContext session = principal.getKeycloakSecurityContext();
         AccessToken accessToken = session.getToken();
-        if(ObjectUtils.isEmpty(accessToken.getEmail()))
+        if (ObjectUtils.isEmpty(accessToken.getEmail()))
             throw new NotFoundException(Constants.USER_NOT_FOUND);
 
         return UserDetail.builder().username(accessToken.getPreferredUsername())

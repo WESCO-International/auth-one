@@ -31,10 +31,8 @@ public class UserServiceImpl implements UserService {
        // headers.add("Content-Type", "application/x-www-form-urlencoded");
         headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         headers.add("Bearer ", UserUtil.getCurrentUserInfo().getJwtToken());
-
         try {
             ResponseEntity<String> responseEntity = restTemplate.postCall(endpintUrl, body, headers);
-            System.out.println(responseEntity.getStatusCode());
         } catch (Exception e) {
             log.error("error while creating user [ " + e.getMessage() + "]");
         }
